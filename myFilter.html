@@ -1,9 +1,30 @@
+
+
 <script src="tinytest.js"></script>
 <script>
+
+ function filter(array,callback) {
+     array.forEach(callback);
+ }
+
+
+
 tests({
 
+  'It should call the callback function array.length number of times': function() {
+    var testArray = ["dog", "cat", "fish", "bird"];
+    var numberOfTimesCallbackHasRun = 0;
+    
+    filter(testArray, function(){
+      numberOfTimesCallbackHasRun++;
+    });
+
+    eq(numberOfTimesCallbackHasRun, testArray.length);
+  },
   '': function() {},
-  '': function() {},
+
 
 });
 </script>
+
+

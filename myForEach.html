@@ -1,0 +1,53 @@
+<script src="tinytest.js"></script>
+<script>
+
+{/* this is the function we are building step by step   */}
+function myForEach(array, callback, optionalThisObject) {
+  
+  var forEachCallback = callback;
+
+  if (optionalThisObject) {
+    forEachCallback = callback.bind(optionalThisObject);
+  }
+
+  for (var i = 0; i < array.length; i++) {
+      forEachCallback(array[i], i, array);
+    
+  }
+}
+  
+  {/* these are tests to check specific functionality of the above function */}
+  tests({
+  'It should run the callback function array.length times.': function() {
+    var numberOfTimesCallbackHasRun = 0
+    myForEach([1, 2, 3], function () {
+      numberOfTimesCallbackHasRun++;
+    });
+    eq(numberOfTimesCallbackHasRun, 3);
+  },
+
+  'it should pass each element as the ith element as the first arguement into the callback function': function() {
+      myForEach([1], function (number) {
+      eq(number, 1);
+    });
+  },
+
+  'It should pass in the ith position as the second arguement of the callback.': function() {
+    myForEach([1], function(number, index){
+      eq(index, 0)
+    })
+  },
+  'It should pass in the array that forEach() is being applied to, as the third arguement to the callback.': function() {
+    var testArray = [1,2,3];
+    myForEach(testArray, function(number, index, originalArray){
+    eq(testArray, originalArray);
+  })
+},
+
+  'It should accept an optional this object': function() {
+   myForEach([1], function(){
+      eq(this.description,  'I should be accessible inside of the callback' )
+   }, {description: 'I should be accessible inside of the callback'})
+  }
+});
+</script>
