@@ -3,26 +3,82 @@
 <script src="tinytest.js"></script>
 <script>
 
- function filter(array,callback) {
-     array.forEach(callback);
- }
+ function filter(originalArray,callback, optionalThis) {
+    var filterCallback = callback;
+
+    if (optionalThis) {
+      filterCallback = callback.bind(optionalThis)
+    }
+
+    var filteredArray = [];
+
+    for (var i = 0; i < originalArray.length; i++) {
+     if (filterCallback(originalArray[i], i, originalArray)) {
+       filteredArray.push(originalArray[i]);
+     }
+    }
+    return filteredArray;
+ };
 
 
 
 tests({
 
-  'It should call the callback function array.length number of times': function() {
-    var testArray = ["dog", "cat", "fish", "bird"];
+
+  'It should run the callback function array.length times.': function() {
     var numberOfTimesCallbackHasRun = 0;
-    
-    filter(testArray, function(){
+    filter([1, 2, 3], function () {
       numberOfTimesCallbackHasRun++;
     });
-
-    eq(numberOfTimesCallbackHasRun, testArray.length);
+    eq(numberOfTimesCallbackHasRun, 3);
   },
-  '': function() {},
 
+  'it should pass each element as the ith element as the first arguement into the callback function': function() {
+       filter([1], function (number) {
+      eq(number, 1);
+    });
+  },
+
+  'It should pass in the ith position as the second arguement of the callback.': function() {
+ 
+    filter([1], function(number, index){
+      eq(index, 0)
+    })
+  },
+  'It should pass in the array that filter() is being applied to, as the third arguement to the callback.': function() {
+
+    var testArray = [1,2,3];
+    filter(testArray, function(number, index, originalArray){
+    eq(testArray, originalArray);
+  })
+},
+  'It should accept an optional this object': function() {
+
+   filter([1], function(){
+      eq(this.description,  'I should be accessible inside of the callback' )
+   }, {description: 'I should be accessible inside of the callback'})
+  },
+
+  'It should return an array.': function() {    
+    var filteredArray = filter([], function(){});
+    eq( Array.isArray(filteredArray), true);
+   },
+
+  'It should return a new array, not the array being filtered': function() {
+
+    var arrayBeingFiltered = [];
+    var filteredArray = filter(arrayBeingFiltered, function(){});
+    eq(filteredArray !== arrayBeingFiltered, true);
+  },
+  'It should return a new array that only has elements where callback returns true': function() {
+    var filteredArray = filter([1,2], function(number) {
+      return number > 1;
+    });
+
+      eq(filteredArray.length, 1 );
+      eq(filteredArray[0], 2);
+    
+  }
 
 });
 </script>
