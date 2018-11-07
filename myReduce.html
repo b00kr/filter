@@ -1,0 +1,67 @@
+<script src="tinytest.js"></script>
+<script>
+tests({
+
+  
+
+  'if (intialValue) --- previousValue should start with  intialvalue': function() {},
+  'if (initialValue) --- currentValue should start with array[0]': function() {},
+  'if (intialValue)  --- calballback will start at index 0': function() {},
+  
+  'if (!intialValue)  --- previousValue should start with  array[0]': function() {},
+  'if (!intialValue)  --- currentValue should start with array[1]': function() {},
+  'if (!intialValue)  --- callback will start at index 1': function() {},
+  
+  'if (initialValue) and array is empty, return intialValue without calling callback': function() {},
+  'if (!initialValue) and array has one element, return element without calling callback': function() {},
+ 
+  'it should actually reduce': function() {},
+  'it should exclude holes': function() {},
+  'if array is empty and (!intialValue) --- TypeError should be thrown': function() {},
+  'it should pass in array as fourth arguement to callback': function() {},
+
+
+  //PROTOTYPE IMPLEMENTATION
+  //  function reduce(array, callback, startingValue){
+  //       var previousValue = startingValue;
+  //       for (var i = 0; i < array.length; i++){
+  //           previousValue = callback(previousValue, array[i], i, array)
+  //       }
+  //       return previousValue;
+  //       }
+
+//FUNCTION SIGNATURE
+//reduce(array, callback[, initialValue])
+
+//CALLBACK PARAMETERS 
+  // previous value = the running total
+  // current value = array[i]
+  // current index = i
+  // array = array
+
+  //returns a single value
+
+  //REQUIREMENTS
+
+    //if (intialValue) --- previousValue should start with  intialvalue
+    //if (initialValue) --- currentValue should start with array[0]
+    //if (intialValue)  --- calballback will start at index 0
+ 
+    //if (!intialValue)  --- previousValue should start with  array[0]
+    //if (!intialValue)  --- currentValue should start with array[1]
+    //if (!intialValue)  --- callback will start at index 1
+
+    //if (initialValue) and array is empty, return intialValue without calling callback
+    //if (initialValue) and array is empty, return intialValue without calling callback
+
+    //it should actually reduce     
+    //it should exclude holes
+    //if array is empty and (!intialValue) --- TypeError should be thrown
+    //it should pass in array as fourth arguement to callback
+ 
+
+ 
+  
+</script>
+
+
