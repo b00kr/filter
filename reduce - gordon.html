@@ -4,7 +4,7 @@
   function reduce(array, callback, initialValue) {
 
     var startingIndex = 0;
-    var resultSoFar = initialValue;
+    var accumulator = initialValue;
     var length = array.length;
     var arrayIndexes = Object.keys(array)
 
@@ -28,7 +28,7 @@
         startingIndex++;
       }
 
-      resultSoFar = array[startingIndex];
+      accumulator = array[startingIndex];
       startingIndex++;
 
     } else { //has initialValue
@@ -39,10 +39,10 @@
 
     for (var i = startingIndex; i < length; i++) {
       if (i in array) {
-        resultSoFar = callback(resultSoFar, array[i], i, array);
+        accumulator = callback(accumulator, array[i], i, array);
       }
     }
-    return resultSoFar;
+    return accumulator;
   }
 
   tests({
